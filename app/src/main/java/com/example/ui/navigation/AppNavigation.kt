@@ -2,11 +2,11 @@ package com.example.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,25 +19,25 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.ui.MainViewModel
 import com.example.ui.screens.DashboardScreen
+import com.example.ui.screens.DiscoveryScreen
 import com.example.ui.screens.ListingsScreen
 import com.example.ui.screens.OrdersScreen
 import com.example.ui.screens.SettingsScreen
-import com.example.ui.screens.StarterKitScreen
 import com.example.ui.theme.*
 import kotlinx.serialization.Serializable
 
 @Serializable object DashboardRoute
+@Serializable object DiscoveryRoute
 @Serializable object ListingsRoute
 @Serializable object OrdersRoute
-@Serializable object StarterKitRoute
 @Serializable object SettingsRoute
 
 data class TopLevelRoute<T : Any>(val name: String, val route: T, val icon: ImageVector)
 
 val topLevelRoutes = listOf(
-    TopLevelRoute("Kit", StarterKitRoute, Icons.Filled.Star),
     TopLevelRoute("Market", DashboardRoute, Icons.Filled.Dashboard),
-    TopLevelRoute("Listings", ListingsRoute, Icons.Filled.List),
+    TopLevelRoute("Discover", DiscoveryRoute, Icons.Filled.Search),
+    TopLevelRoute("Listings", ListingsRoute, Icons.AutoMirrored.Filled.List),
     TopLevelRoute("Orders", OrdersRoute, Icons.Filled.ShoppingCart),
     TopLevelRoute("Config", SettingsRoute, Icons.Filled.Settings)
 )
@@ -87,14 +87,14 @@ fun AppNavigation(viewModel: MainViewModel) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = StarterKitRoute,
+            startDestination = DashboardRoute,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<StarterKitRoute> {
-                StarterKitScreen()
-            }
             composable<DashboardRoute> {
                 DashboardScreen(viewModel, onNavigateToListings = { navController.navigate(ListingsRoute) })
+            }
+            composable<DiscoveryRoute> {
+                DiscoveryScreen(viewModel)
             }
             composable<ListingsRoute> {
                 ListingsScreen(viewModel)
