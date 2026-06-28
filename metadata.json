@@ -1,0 +1,6 @@
+{
+  "name": "Dropship Auto Reseller",
+  "description": "Automated dropshipping manager with price tracking, AI content generation, and multi-platform listing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
